@@ -1,0 +1,11 @@
+{
+  "ecmaVersion": 5,
+  "libs": [
+    "browser",
+    "jquery"
+  ],
+  "plugins":{
+    "doc_comment":{},
+    "angular": {}
+  }
+}

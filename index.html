@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+    <meta name="HandheldFriendly" content="true"/>
+    <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular-csp.css" />
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular-touch.js"></script>
+    <script src="app/ng.js"></script>
+  </head>
+  <body>
+    <section ng-app="TestApp">
+      <sw-menu class="product">
+        <sw-menu-content>
+            <h1 class="product__head">TEST</h1>
+            <div class="product__price">1000 $</div>
+            <p class="product__info">Some product info</p>
+        </sw-menu-content>
+        <sw-menu-left>
+          <button class="sw-menu__btn"><i class="fa fa-remove"></i></button>
+        </sw-menu-left>
+        <sw-menu-right>
+          <button class="sw-menu__btn"><i class="fa fa-cart-plus"></i></button>
+          <button class="sw-menu__btn"><i class="fa fa-camera"></i></button>
+          <button class="sw-menu__btn"><i class="fa fa-comments"></i></button>
+        </sw-menu-right>
+      </sw-menu>
+      <div sw-block class="product">
+        <sw-block-content>
+            <h1 class="product__head">TEST</h1>
+            <div class="product__price">1000 $</div>
+            <p class="product__info">Some product info</p>
+        </sw-block-content>
+        <sw-block-left>
+          <button class="sw-menu__btn"><i class="fa fa-remove"></i></button>
+        </sw-block-left>
+        <sw-block-right>
+          <button class="sw-menu__btn"><i class="fa fa-cart-plus"></i></button>
+          <button class="sw-menu__btn"><i class="fa fa-camera"></i></button>
+          <button class="sw-menu__btn"><i class="fa fa-comments"></i></button>
+        </sw-block-right>
+      </div>
+    </section>
+
+  </body>
+</html>

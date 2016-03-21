@@ -1,0 +1,44 @@
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE/Edge */
+  user-select: none;           /* non-prefixed version, currently                                  not supported by any browser */
+}
+.product{
+  background-image: url('img.jpg');
+  background-position: left top;
+  background-repeat: no-repeat;
+  width: 215px;
+  height: 140px;
+}
+.product__head{
+  font-size:16pt;
+  color:white;
+  text-align: center;
+}
+.product__price{
+  font-size: 22pt;
+  float: right;
+  color: rgb(113, 72, 27);
+  font-weight: bold;
+  text-shadow: -3px 0px 11px white;
+  font-family: sans-serif;
+}
+.product__info{
+  text-align: justify;
+  clear:both;
+  color:white;
+  font-size: 14pt;
+  width: 100%;
+  background-color: rgba(57, 64, 62, 0.54);
+}
+.sw-menu__btn{
+  border:0px;
+  outline: none;
+  width:32px;
+  height: 32px;
+  padding:0;
+  margin:0;
+}
