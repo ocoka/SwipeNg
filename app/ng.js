@@ -175,17 +175,12 @@ directive("swBlock",["$http","$swipe",function swBlockFactory($http,$swipe){
             },elContent,"content");
 
             /*event handler's*/
-            if (iAttrs.swMode=="resize"){
-              resizeHandlers();
-            }else{
-              moveHandlers();
-            }
-
-            function moveHandlers(){
               var fx=null;
+              var resize=iAttrs.swMode=="resize";
               var nextFrameLeft=null;
               var nextFrameRight=null;
               var framePos=null;
+              //TODO: if left or right presnent
               $swipe.bind(iElement,{
                 start:function(coords){
                   fx=coords.x;
@@ -198,104 +193,99 @@ directive("swBlock",["$http","$swipe",function swBlockFactory($http,$swipe){
                   var mov=coords.x-fx;
                   var pos=0;
 
-                  if (mov>0 && leftPresent){
-                    pos=framePos+mov;
-                    if (framePos<0) {
+                  if (mov>0){
+                    
+                    if (framePos<0 && rightPresent) {
+                      pos=framePos+mov;
                       nextFrameLeft=0;
+                      if (Math.abs(mov)>maxWidth/2){
                       nextFrameRight=0;
+                      }else{
+                      nextFrameRight=Math.max(framePos-maxWidth,-1*elRightBlock.outerWidth());
+                      }
                       pos=Math.min(0,pos);
-                    }else{
+                      if (resize){
+                      elFrame.css("padding-left",Math.abs(pos)+"px");
+                      }
+                      
+                    }else if(leftPresent){
+                      pos=framePos+mov;
                       if (pos>nextFrameLeft){
                         nextFrameLeft=Math.min(nextFrameLeft+maxWidth,elLeftBlock.outerWidth());
                       }
                       pos=Math.min(nextFrameLeft,pos);
+                      if(resize){
+                        elFrame.css("padding-left","");
+                        elFrame.css("padding-right",Math.abs(pos)+"px");
+                      }
                     }
                     elFrame.css("left",pos+"px");
-                  }else if(mov<0 && rightPresent){
-                    pos=framePos+mov;
-                    if (framePos>0){
-                      nextFrameLeft=0;
+                  }else if(mov<0){
+                    
+                    if (framePos>0 && leftPresent) {
+                      pos=framePos+mov;
                       nextFrameRight=0;
+                      if (Math.abs(mov)>maxWidth/2){
+                      nextFrameLeft=0;
+                      }else{
+                      nextFrameLeft=Math.min(framePos+maxWidth,elLeftBlock.outerWidth());
+                      }
                       pos=Math.max(0,pos);
-                    }else{
+                      if(resize){
+                      elFrame.css("padding-right",Math.abs(pos)+"px");
+                      }
+                    }else if(leftPresent){
+                      pos=framePos+mov;
                       if (pos<nextFrameRight){
                         nextFrameRight=Math.max(nextFrameRight-maxWidth,-1*elRightBlock.outerWidth());
                       }
                       pos=Math.max(nextFrameRight,pos);
+                      if(resize){
+                        elFrame.css("padding-right","");
+                        elFrame.css("padding-left",Math.abs(pos)+"px");
+                      }
                     }
-
                     elFrame.css("left",pos+"px");
                   }
                 },
                 end:function(coords){
+                  
                   var mov=coords.x-fx;
-                  if (mov>0 && leftPresent){
-                    elFrame.css("left",nextFrameLeft+"px");
-                  }else if(mov<0 && rightPresent){
-                    elFrame.css("left",nextFrameRight+"px");
-                  }
-                }
-              });
-            }
-            function resizeHandlers(){
-              var fx=null;
-              var nextFrameLeft=null;
-              var nextFrameRight=null;
-              var framePadLeft=null;
-              var framePadRight=null;
-              $swipe.bind(iElement,{
-                start:function(coords){
-                  fx=coords.x;
-                  framePadLeft=parseInt(elFrame.css("padding-left"));
-                  framePadLeft=isNaN(framePadLeft)?0:framePadLeft;
-                  framePadRight=parseInt(elFrame.css("padding-right"));
-                  framePadRight=isNaN(framePadRight)?0:framePadRight;
-                  nextFrameLeft=Math.min(framePadLeft+maxWidth,elLeftBlock.outerWidth());
-                  nextFrameRight=Math.max(framePadRight+maxWidth,elRightBlock.outerWidth());
-                },
-                move:function(coords){
-                  var mov=coords.x-fx;
-                  var pos=0;
-
                   if (mov>0){
-
-                    if (framePadRight>0) {
-                      nextFrameLeft=0;
-                      nextFrameRight=0;
+                    
+                    if (framePos<0 && rightPresent) {
+                      if (resize){
+                      elFrame.css("padding-left",Math.abs(nextFrameRight)+"px");
+                      }
+                      elFrame.css("left",nextFrameRight+"px");
                     }else if(leftPresent){
-                      pos=framePadLeft+mov;
-                      if (pos>nextFrameLeft){
-                        nextFrameLeft=Math.min(nextFrameLeft+maxWidth,elLeftBlock.outerWidth());
+                      
+                      if(resize){
+                        elFrame.css("padding-left","");
+                        elFrame.css("padding-right",Math.abs(nextFrameLeft)+"px");
                       }
-                      pos=Math.min(nextFrameLeft,pos);
-                      elFrame.css("padding-left",pos+"px");
+                      elFrame.css("left",nextFrameLeft+"px");
                     }
+                    
                   }else if(mov<0){
-
-                    if (framePadLeft>0){
-                      nextFrameLeft=0;
-                      nextFrameRight=0;
-                    }else if(rightPresent){
-                      mov=Math.abs(mov);
-                      pos=framePadRight+mov;
-                      if (pos>nextFrameRight){
-                        nextFrameRight=Math.max(nextFrameRight+maxWidth,elRightBlock.outerWidth());
+                    if (framePos>0 && leftPresent) {
+                      if (resize){
+                      elFrame.css("padding-right",Math.abs(nextFrameLeft)+"px");
                       }
-                      pos=Math.max(nextFrameRight,pos);
-                      elFrame.css("padding-right",pos+"px");
+                      elFrame.css("left",nextFrameLeft+"px");
+                    }else if(rightPresent){
+                      
+                      if(resize){
+                        elFrame.css("padding-right","");
+                        elFrame.css("padding-left",Math.abs(nextFrameRight)+"px");
+                      }
+                      elFrame.css("left",nextFrameRight+"px");
                     }
-                  }
-                },
-                end:function(coords){
-                  var mov=coords.x-fx;
-                  if (mov>0 && leftPresent){
-                    elFrame.css("padding-left",nextFrameLeft+"px");
-                  }else if(mov<0 && rightPresent){
-                    elFrame.css("padding-right",nextFrameRight+"px");
                   }
                 }
               });
-            }
+            
+            
           }
         }
         // or

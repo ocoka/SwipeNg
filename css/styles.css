@@ -42,3 +42,6 @@
   padding:0;
   margin:0;
 }
+.sw-block{
+overflow: visible;
+}
