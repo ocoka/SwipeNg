@@ -31,7 +31,22 @@
           <button class="sw-menu__btn"><i class="fa fa-comments"></i></button>
         </sw-menu-right>
       </sw-menu>
-      <div sw-block class="product">
+      <div sw-block sw-mode="move" class="product">
+        <sw-block-content>
+            <h1 class="product__head">TEST</h1>
+            <div class="product__price">1000 $</div>
+            <p class="product__info">Some product info</p>
+        </sw-block-content>
+        <sw-block-left>
+          <button class="sw-menu__btn"><i class="fa fa-remove"></i></button>
+        </sw-block-left>
+        <sw-block-right>
+          <button class="sw-menu__btn"><i class="fa fa-cart-plus"></i></button>
+          <button class="sw-menu__btn"><i class="fa fa-camera"></i></button>
+          <button class="sw-menu__btn"><i class="fa fa-comments"></i></button>
+        </sw-block-right>
+      </div>
+      <div sw-block sw-mode="resize" class="product">
         <sw-block-content>
             <h1 class="product__head">TEST</h1>
             <div class="product__price">1000 $</div>

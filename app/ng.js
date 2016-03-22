@@ -175,40 +175,127 @@ directive("swBlock",["$http","$swipe",function swBlockFactory($http,$swipe){
             },elContent,"content");
 
             /*event handler's*/
-            var fx=null;
-            var maxFrameLeft=null;
-            var maxFrameRight=null;
-            var framePos=null;
-            $swipe.bind(iElement,{
-              start:function(coords){
-                fx=coords.x;
-                framePos=parseInt(elFrame.css("left"));
-                framePos=isNaN(framePos)?0:framePos;
-                maxFrameLeft=Math.min(framePos+maxWidth,elLeftBlock.outerWidth());
-                maxFrameRight=Math.max(framePos-maxWidth,-1*elRightBlock.outerWidth());
-              },
-              move:function(coords){
-                var mov=coords.x-fx;
-                var pos=0;
-                if (mov>0 && leftPresent){
-                  pos=Math.min(maxFrameLeft,framePos+mov);
+            if (iAttrs.swMode=="resize"){
+              resizeHandlers();
+            }else{
+              moveHandlers();
+            }
 
-                  elFrame.css("left",pos+"px");
-                }else if(mov<0 && rightPresent){
-                  pos=Math.max(maxFrameRight,framePos+mov);
+            function moveHandlers(){
+              var fx=null;
+              var nextFrameLeft=null;
+              var nextFrameRight=null;
+              var framePos=null;
+              $swipe.bind(iElement,{
+                start:function(coords){
+                  fx=coords.x;
+                  framePos=parseInt(elFrame.css("left"));
+                  framePos=isNaN(framePos)?0:framePos;
+                  nextFrameLeft=Math.min(framePos+maxWidth,elLeftBlock.outerWidth());
+                  nextFrameRight=Math.max(framePos-maxWidth,-1*elRightBlock.outerWidth());
+                },
+                move:function(coords){
+                  var mov=coords.x-fx;
+                  var pos=0;
 
-                  elFrame.css("left",pos+"px");
+                  if (mov>0 && leftPresent){
+                    pos=framePos+mov;
+                    if (framePos<0) {
+                      nextFrameLeft=0;
+                      nextFrameRight=0;
+                      pos=Math.min(0,pos);
+                    }else{
+                      if (pos>nextFrameLeft){
+                        nextFrameLeft=Math.min(nextFrameLeft+maxWidth,elLeftBlock.outerWidth());
+                      }
+                      pos=Math.min(nextFrameLeft,pos);
+                    }
+                    elFrame.css("left",pos+"px");
+                  }else if(mov<0 && rightPresent){
+                    pos=framePos+mov;
+                    if (framePos>0){
+                      nextFrameLeft=0;
+                      nextFrameRight=0;
+                      pos=Math.max(0,pos);
+                    }else{
+                      if (pos<nextFrameRight){
+                        nextFrameRight=Math.max(nextFrameRight-maxWidth,-1*elRightBlock.outerWidth());
+                      }
+                      pos=Math.max(nextFrameRight,pos);
+                    }
+
+                    elFrame.css("left",pos+"px");
+                  }
+                },
+                end:function(coords){
+                  var mov=coords.x-fx;
+                  if (mov>0 && leftPresent){
+                    elFrame.css("left",nextFrameLeft+"px");
+                  }else if(mov<0 && rightPresent){
+                    elFrame.css("left",nextFrameRight+"px");
+                  }
                 }
-              },
-              end:function(coords){
-                var mov=coords.x-fx;
-                if (mov>0 && leftPresent){
-                  elFrame.css("left",maxFrameLeft+"px");
-                }else if(mov<0 && rightPresent){
-                  elFrame.css("left",maxFrameRight+"px");
+              });
+            }
+            function resizeHandlers(){
+              var fx=null;
+              var nextFrameLeft=null;
+              var nextFrameRight=null;
+              var framePadLeft=null;
+              var framePadRight=null;
+              $swipe.bind(iElement,{
+                start:function(coords){
+                  fx=coords.x;
+                  framePadLeft=parseInt(elFrame.css("padding-left"));
+                  framePadLeft=isNaN(framePadLeft)?0:framePadLeft;
+                  framePadRight=parseInt(elFrame.css("padding-right"));
+                  framePadRight=isNaN(framePadRight)?0:framePadRight;
+                  nextFrameLeft=Math.min(framePadLeft+maxWidth,elLeftBlock.outerWidth());
+                  nextFrameRight=Math.max(framePadRight+maxWidth,elRightBlock.outerWidth());
+                },
+                move:function(coords){
+                  var mov=coords.x-fx;
+                  var pos=0;
+
+                  if (mov>0){
+
+                    if (framePadRight>0) {
+                      nextFrameLeft=0;
+                      nextFrameRight=0;
+                    }else if(leftPresent){
+                      pos=framePadLeft+mov;
+                      if (pos>nextFrameLeft){
+                        nextFrameLeft=Math.min(nextFrameLeft+maxWidth,elLeftBlock.outerWidth());
+                      }
+                      pos=Math.min(nextFrameLeft,pos);
+                      elFrame.css("padding-left",pos+"px");
+                    }
+                  }else if(mov<0){
+
+                    if (framePadLeft>0){
+                      nextFrameLeft=0;
+                      nextFrameRight=0;
+                    }else if(rightPresent){
+                      mov=Math.abs(mov);
+                      pos=framePadRight+mov;
+                      if (pos>nextFrameRight){
+                        nextFrameRight=Math.max(nextFrameRight+maxWidth,elRightBlock.outerWidth());
+                      }
+                      pos=Math.max(nextFrameRight,pos);
+                      elFrame.css("padding-right",pos+"px");
+                    }
+                  }
+                },
+                end:function(coords){
+                  var mov=coords.x-fx;
+                  if (mov>0 && leftPresent){
+                    elFrame.css("padding-left",nextFrameLeft+"px");
+                  }else if(mov<0 && rightPresent){
+                    elFrame.css("padding-right",nextFrameRight+"px");
+                  }
                 }
-              }
-            });
+              });
+            }
           }
         }
         // or
