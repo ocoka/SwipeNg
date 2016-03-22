@@ -194,7 +194,7 @@ directive("swBlock",["$http","$swipe",function swBlockFactory($http,$swipe){
                   var pos=0;
 
                   if (mov>0){
-                    
+
                     if (framePos<0 && rightPresent) {
                       pos=framePos+mov;
                       nextFrameLeft=0;
@@ -205,9 +205,9 @@ directive("swBlock",["$http","$swipe",function swBlockFactory($http,$swipe){
                       }
                       pos=Math.min(0,pos);
                       if (resize){
-                      elFrame.css("padding-left",Math.abs(pos)+"px");
+                      elFrame.css( "padding-left",Math.abs(pos)+"px");
                       }
-                      
+
                     }else if(leftPresent){
                       pos=framePos+mov;
                       if (pos>nextFrameLeft){
@@ -215,13 +215,13 @@ directive("swBlock",["$http","$swipe",function swBlockFactory($http,$swipe){
                       }
                       pos=Math.min(nextFrameLeft,pos);
                       if(resize){
-                        elFrame.css("padding-left","");
-                        elFrame.css("padding-right",Math.abs(pos)+"px");
+                        elFrame.css( "padding-left","");
+                        elFrame.css( "padding-right",Math.abs(pos)+"px");
                       }
                     }
                     elFrame.css("left",pos+"px");
                   }else if(mov<0){
-                    
+
                     if (framePos>0 && leftPresent) {
                       pos=framePos+mov;
                       nextFrameRight=0;
@@ -232,7 +232,7 @@ directive("swBlock",["$http","$swipe",function swBlockFactory($http,$swipe){
                       }
                       pos=Math.max(0,pos);
                       if(resize){
-                      elFrame.css("padding-right",Math.abs(pos)+"px");
+                      elFrame.css( "padding-right",Math.abs(pos)+"px");
                       }
                     }else if(leftPresent){
                       pos=framePos+mov;
@@ -241,51 +241,53 @@ directive("swBlock",["$http","$swipe",function swBlockFactory($http,$swipe){
                       }
                       pos=Math.max(nextFrameRight,pos);
                       if(resize){
-                        elFrame.css("padding-right","");
-                        elFrame.css("padding-left",Math.abs(pos)+"px");
+                        elFrame.css( "padding-right","");
+                        elFrame.css( "padding-left",Math.abs(pos)+"px");
                       }
                     }
                     elFrame.css("left",pos+"px");
                   }
+                  console.log(elFrame.css("padding-left"));
                 },
                 end:function(coords){
-                  
+
                   var mov=coords.x-fx;
                   if (mov>0){
-                    
+
                     if (framePos<0 && rightPresent) {
                       if (resize){
-                      elFrame.css("padding-left",Math.abs(nextFrameRight)+"px");
+                      elFrame.css( "padding-left",Math.abs(nextFrameRight)+"px");
                       }
                       elFrame.css("left",nextFrameRight+"px");
                     }else if(leftPresent){
-                      
+
                       if(resize){
-                        elFrame.css("padding-left","");
-                        elFrame.css("padding-right",Math.abs(nextFrameLeft)+"px");
+                        elFrame.css( "padding-left","");
+                        elFrame.css( "padding-right",Math.abs(nextFrameLeft)+"px");
                       }
                       elFrame.css("left",nextFrameLeft+"px");
                     }
-                    
+
                   }else if(mov<0){
                     if (framePos>0 && leftPresent) {
                       if (resize){
-                      elFrame.css("padding-right",Math.abs(nextFrameLeft)+"px");
+                      elFrame.css( "padding-right",Math.abs(nextFrameLeft)+"px");
                       }
                       elFrame.css("left",nextFrameLeft+"px");
                     }else if(rightPresent){
-                      
+
                       if(resize){
-                        elFrame.css("padding-right","");
-                        elFrame.css("padding-left",Math.abs(nextFrameRight)+"px");
+                        elFrame.css( "padding-right","");
+                        elFrame.css( "padding-left",Math.abs(nextFrameRight)+"px");
                       }
                       elFrame.css("left",nextFrameRight+"px");
                     }
                   }
+                  console.log(elFrame.css("padding-left"));
                 }
               });
-            
-            
+
+
           }
         }
         // or

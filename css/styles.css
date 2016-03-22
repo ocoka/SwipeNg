@@ -44,4 +44,15 @@
 }
 .sw-block{
 overflow: visible;
+border:2px solid lightgreen;
+}
+.sw-block__content {
+  border:2px solid red;
+
+  background-clip: padding-box;
+}
+.sw-block__frame {
+  border:2px solid magenta;
+  background-color: cyan;
+  background-clip: padding-box;
 }
